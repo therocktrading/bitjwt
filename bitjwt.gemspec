@@ -13,6 +13,9 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/bitjwt'
   s.license       = 'MIT'
+  s.files         = `git ls-files -z`.split("\x0")
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
+  s.require_paths = ['lib']
 
   s.add_dependency 'ffi', '~> 1.9'
   s.add_dependency 'bitcoin-ruby', '0.0.8'
