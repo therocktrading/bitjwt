@@ -36,7 +36,7 @@ module BitJWT
       @signature ||= crypto.sign(header_payload_encoded)
     end
 
-    def send(url, method)
+    def send(url, method, raw_response = false)
       connection = Excon.new(url, omit_default_port: true)
       response = connection.request(path: payload_to_h['aud'],
                                     method: method,
@@ -46,6 +46,7 @@ module BitJWT
                                     },
                                     body: "#{header_payload_encoded}.#{signature_encoded}")
       raise ProtocolError.new(response.status, response.body) unless (200..299).cover?(response.status)
+      return response.body if raw_response
       build_response(response.body)
     end
 

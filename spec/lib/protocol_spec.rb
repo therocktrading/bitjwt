@@ -54,6 +54,12 @@ module BitJWT
         expect(payload['data']).to eql JWTStub::PAYLOAD['data']
       end
 
+      it 'receive a raw response' do
+        jwt_stub.valid_response
+        response = request.send(url, 'POST', true)
+        expect(response).to be_a(String)
+      end
+
       it 'receive an invalid response (tampered payload)' do
         jwt_stub.invalid_response
         response = request.send(url, 'POST')
